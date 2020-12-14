@@ -1,0 +1,61 @@
+{
+  "@context": ["https://www.w3.org/2019/wot/td/v1"],
+  "id": "urn:dev:org:wot-runtime:<systemRuntimeId>",
+  "title": "<systemRuntimeName>",
+  "description": "A TD for the runtime controller exposed by the wot-runtime",
+  "securityDefinitions": {
+    "nosec_sc": { "scheme": "nosec" },
+    "basic_sc": { "scheme": "basic", "in": "header" }
+  },
+  "security": ["no_sec"],
+  "properties": {
+    "system": { "type": "object" },
+    "mashupLogic": { "type": "object" },
+    "seqD": { "type": "string" },
+    "codeTS": {
+      "type": "string",
+      "contentMediaType": "text/x.typescript"
+    },
+    "baseTS": {
+      "type": "string",
+      "contentMediaType": "text/x.typescript"
+    },
+    "code": {
+      "type": "string",
+      "contentMediaType": "text/javascript"
+    },
+    "base": {
+      "type": "string",
+      "contentMediaType": "text/javascript"
+    },
+    "logs": { "type": "object" },
+    "traces": { "type": "object" },
+    "hostOS": {
+      "type": "string",
+      "enum": ["aix", "darwin", "freebsd", "linux", "openbsd", "sunos", "win32"]
+    },
+    "memoryUsage": { "type": "object" },
+    "resourceUsage": { "type": "object" },
+    "uptime": { "type": "number", "unit": "s", "minimum": 0.0 },
+    "status": {
+      "type": "string",
+      "enum": ["idle", "loading", "running", "working", "stopped", "failed"]
+    },
+    "statusSvg": { "type": "string" },
+    "statechartSvg": { "type": "string" },
+    "step": { "type": "string" }
+  },
+  "actions": {
+    "start": { "description": "Starts a WoT System Runtime process" },
+    "restart": { "description": "Restarts a WoT System Runtime process" },
+    "stop": { "description": "Stops a WoT System Runtime process" }
+  },
+  "events": {
+    "start": { "description": "Status changed from 'idle' to 'loading'" },
+    "done": { "description": "Status changed to 'running'" },
+    "work": { "description": "Status changed from 'running' to 'working'" },
+    "restart": { "description": "Status changed to 'loading'" },
+    "stop": { "description": "Status changed from 'running' to 'stopped'" },
+    "error": { "description": "Status changed from 'running' to 'failed'" }
+  }
+}

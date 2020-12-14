@@ -1,0 +1,23 @@
+<scxml initial="bootUp" name="MyTemperatureThing2_SM" version="1.0" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0 y=0 w=638 h=513  -->
+ <state id="bootUp"><!--   node-size-and-position x=220.5 y=43 w=75 h=75  -->
+  <transition event="initiate" target="initiate"></transition>
+ </state>
+ <state id="askedTemperature"><!--   node-size-and-position x=200 y=380 w=110 h=75  -->
+  <transition event="initiate" target="initiate"><!--   edge-path [initiate]  x=210 y=310 pointx=0 pointy=-19 offsetx=12 offsety=-14  --></transition>
+  <transition cond="askedTemperature &gt; roomTemperature" event="increase" target="increase"></transition>
+  <transition cond="askedTemperature &lt; roomTemperature" event="decrease" target="decrease"></transition>
+ </state>
+ <state id="initiate"><!--   node-size-and-position x=220.5 y=168 w=75 h=75  -->
+  <transition event="askedTemperature" target="askedTemperature"><!--   edge-path [askedTemperature]  x=320 y=310 pointx=0 pointy=-26 offsetx=-7 offsety=12  --></transition>
+  <transition event="turnOff" target="turnOff"></transition>
+ </state>
+ <final id="turnOff"><!--   node-size-and-position x=410.5 y=110 w=75 h=75  --></final>
+ <state id="increase"><!--   node-size-and-position x=60.5 y=280 w=75 h=75  -->
+  <transition cond="askedTemperature &gt; roomTemperature &amp;&amp; askedTemperature &gt;= roomTemperature+inputData" event="increase" target="increase"><!--   edge-path [increase]  x=120 y=250 pointx=0 pointy=10 offsetx=2 offsety=0  --></transition>
+  <transition cond="askedTemperature == roomTemperature" event="initiate" target="initiate"><!--   edge-path [initiate]  pointx=0 pointy=0 offsetx=-2 offsety=0  --></transition>
+ </state>
+ <state id="decrease"><!--   node-size-and-position x=420.5 y=270 w=75 h=75  -->
+  <transition cond="askedTemperature &lt; roomTemperature &amp;&amp; askedTemperature &gt;= roomTemperature-inputData" event="decrease" target="decrease"><!--   edge-path [decrease]  x=460 y=250 pointx=0 pointy=10 offsetx=2 offsety=0  --></transition>
+  <transition cond="askedTemperature == roomTemperature" event="initiate" target="initiate"><!--   edge-path [initiate]  x=370 y=260 pointx=0 pointy=-27 offsetx=8 offsety=9  --></transition>
+ </state>
+</scxml>

@@ -1,0 +1,22 @@
+{
+  "name": "wot-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Miguel Romero Karam",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@node-wot/binding-coap": "^0.7.0",
+    "@node-wot/binding-http": "^0.7.0",
+    "@node-wot/core": "^0.7.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@node-wot/cli": "^0.7.0"
+  }
+}

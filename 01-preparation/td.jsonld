@@ -1,0 +1,121 @@
+{
+    "@context": "https://www.w3.org/2019/wot/td/v1",
+    "@type": "coffeMachine",
+    "id": "urn:dev:ops:CoffeMachine",
+    "title": "CoffeMachine",
+    "description": "A sample TD for a ficticious coffee machine.",
+    "support": "mailto:miguel.romero@tum.de",
+    "version" : { "instance": "1.0.0"},
+    "securityDefinitions": {"nosec_sc": {"scheme": "nosec"}},
+    "security": ["nosec_sc"],
+    "properties": {
+        "state": {
+            "type": "string",
+            "enum": [ "brewing", "grinding", "error" ],
+            "forms": [{
+                "op": "readproperty",
+                "href": "https://servient.example.com/state",
+                "contentType": "application/json"
+            }]
+        }
+    },
+    "actions": {
+        "brewCoffee": {
+            "title": "Brew coffee",
+            "description": "Brew a type of coffee.",
+            "safe": true,
+            "idempotent": true,
+            "input": {
+                "type": "string",
+                "properties": {
+                    "coffeeType": {
+                        "type": "string",
+                        "enum": [ "americano", "espresso", "latte", "mocha", "capuccino" ]
+                    }
+                },
+                "required": ["brewCoffee"]
+            },
+            "output": { "type": "string" },
+            "forms": [{
+                "op": "invokeaction",
+                "href": "https://servient.example.com/brewCoffee",
+                "contentType": "application/json",
+                "htv:methodName": "POST"
+            }]
+        },
+        "stopBrewProcess": {
+            "title": "Stop brew process",
+            "description": "Stop any running brew process.",
+            "safe": true,
+            "idempotent": true,
+            "forms": [{
+                "op": "invokeaction",
+                "href": "https://servient.example.com/stopBrewProcess",
+                "contentType": "application/json",
+                "cov:methodName": "POST"
+            }]
+        },
+        "powerOn": {
+            "title": "Power-on",
+            "description": "Power-on the coffee machine.",
+            "safe": true,
+            "idempotent": true,
+            "forms": [{
+                "op": "invokeaction",
+                "href": "https://servient.example.com/powerOn",
+                "contentType": "application/json",
+                "htv:methodName": "POST"
+            }]
+        },
+        "powerOff": {
+            "title": "Power-off",
+            "description": "Power-off the coffee machine.",
+            "safe": true,
+            "idempotent": true,
+            "forms": [{
+                "op": "invokeaction",
+                "href": "https://servient.example.com/powerOff",
+                "contentType": "application/json",
+                "htv:methodName": "POST"
+            }]
+        },
+    },
+    "events": {
+        "waterLevelLow": {
+            "description" : "Water level is low.",
+            "data": {"type": "boolean"},
+            "forms": [{
+                "href": "coaps://servient.example.com/waterLevelLow",
+                "cov:methodName" : "GET",
+                "subprotocol" : "cov:observe" 
+            }]
+        },
+        "coffeeLevelLow": {
+            "description" : "Coffee level is low.",
+            "data": {"type": "boolean"},
+            "forms": [{
+                "href": "coaps://servient.example.com/coffeeLevelLow",
+                "cov:methodName" : "GET",
+                "subprotocol" : "cov:observe" 
+            }]
+        },
+        "coffeeBinFull": {
+            "description" : "Coffee bin is full.",
+            "data": {"type": "boolean"},
+            "forms": [{
+                "href": "coaps://servient.example.com/coffeeBinFull",
+                "cov:methodName" : "GET",
+                "subprotocol" : "cov:observe" 
+            }]
+        },
+        "error": {
+            "description" : "Coffee machine threw an error.",
+            "data": {"type": "string"},
+            "forms": [{
+                "href": "coaps://servient.example.com/error",
+                "cov:methodName" : "GET",
+                "subprotocol" : "cov:observe" 
+            }]
+        }
+    }
+}

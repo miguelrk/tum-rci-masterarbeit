@@ -1,0 +1,99 @@
+{
+  "@context": ["https://www.w3.org/2019/wot/td/v1", { "@language": "en" }],
+  "@type": "",
+  "description": "Conveyor belt with a stepper motor and RPi controller",
+  "id": "urn:dev:ops:32473-ConveyorBelt-001",
+  "security": "basic_sc",
+  "securityDefinitions": { "basic_sc": { "in": "header", "scheme": "basic" } },
+  "title": "ConveyorBelt",
+  "base": "https://192.168.178.194:8080/",
+  "forms": [
+    {
+      "contentType": "application/json",
+      "href": "properties",
+      "op": ["writeallproperties", "writemultipleproperties"]
+    }
+  ],
+  "properties": {
+    "speed": {
+      "description": "Speed of the conveyor belt (negative values indicate backwards direction)",
+      "forms": [
+        {
+          "contentType": "application/json",
+          "href": "properties/speed",
+          "op": ["readproperty", "writeproperty"]
+        }
+      ],
+      "maximum": 100,
+      "minimum": -100,
+      "observable": false,
+      "readOnly": false,
+      "title": "Speed",
+      "type": "integer",
+      "unit": "%",
+      "writeOnly": false
+    }
+  },
+  "actions": {
+    "start": {
+      "description": "This action starts moving the conveyor belt with the current speed value",
+      "forms": [
+        {
+          "contentType": "application/json",
+          "href": "actions/start",
+          "htv:methodName": "POST",
+          "op": ["invokeaction"]
+        }
+      ],
+      "idempotent": false,
+      "output": { "const": "Conveyor belt started" },
+      "safe": false,
+      "synchronous": true,
+      "title": "Start"
+    },
+    "stop": {
+      "description": "This action stops moving the conveyor belt",
+      "forms": [
+        {
+          "contentType": "application/json",
+          "href": "actions/stop",
+          "htv:methodName": "POST",
+          "op": ["invokeaction"]
+        }
+      ],
+      "idempotent": false,
+      "output": { "const": "Conveyor belt stopped" },
+      "safe": false,
+      "synchronous": false,
+      "title": "Stop"
+    }
+  },
+  "events": {
+    "start": {
+      "data": { "type": "boolean" },
+      "description": "Fires with true when conveyor belt starts.",
+      "forms": [
+        {
+          "contentType": "application/json",
+          "href": "events/start",
+          "op": ["subscribeevent"],
+          "subprotocol": "longpoll"
+        }
+      ],
+      "title": "Started"
+    },
+    "stop": {
+      "data": { "type": "boolean" },
+      "description": "Fires with true when conveyor belt stops.",
+      "forms": [
+        {
+          "contentType": "application/json",
+          "href": "events/stop",
+          "op": ["subscribeevent"],
+          "subprotocol": "longpoll"
+        }
+      ],
+      "title": "Stopped"
+    }
+  }
+}

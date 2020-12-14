@@ -1,0 +1,114 @@
+{
+  "@context": ["https://www.w3.org/2019/wot/td/v1"],
+  "id": "urn:dev:org:wot-runtime:<systemRuntimeId>",
+  "title": "<systemRuntimeName>",
+  "description": "A TD for the runtime controller exposed by the wot-runtime",
+  "securityDefinitions": {
+    "nosec_sc": { "scheme": "nosec" },
+    "basic_sc": { "scheme": "basic", "in": "header" }
+  },
+  "security": ["no_sec"],
+  "properties": {
+    "system": {
+      "description": "The system record in the database",
+      "type": "object"
+    },
+    "mashupLogic": {
+      "description": "The mashupLogic script",
+      "type": "object"
+    },
+    "seqD": {
+      "description": "The seqD script",
+      "type": "string"
+    },
+    "codeTS": {
+      "description": "The TypeScript code generated from the SD",
+      "type": "string",
+      "contentMediaType": "text/x.typescript"
+    },
+    "baseTS": {
+      "description": "The TypeScript index.ts base code generated from the SD",
+      "type": "string",
+      "contentMediaType": "text/x.typescript"
+    },
+    "code": {
+      "description": "The JavaScript code generated from the SD",
+      "type": "string",
+      "contentMediaType": "text/javascript"
+    },
+    "base": {
+      "description": "The JavaScript index.js base code generated from the SD",
+      "type": "string",
+      "contentMediaType": "text/javascript"
+    },
+    "logs": {
+      "description": "The runtime logs",
+      "type": "object"
+    },
+    "traces": {
+      "description": "The runtime traces",
+      "type": "object"
+    },
+    "hostOS": {
+      "description": "A string identifying the operating system platform on which the Node.js process is running",
+      "type": "string",
+      "enum": ["aix", "darwin", "freebsd", "linux", "openbsd", "sunos", "win32"]
+    },
+    "memoryUsage": {
+      "description": "An object describing the memory usage of the Node.js process measured in bytes",
+      "type": "object"
+    },
+    "resourceUsage": {
+      "description": "An object describing the resource usage of the current Node.js process",
+      "type": "object"
+    },
+    "uptime": {
+      "description": "The number of seconds the current Node.js process has been running",
+      "type": "number",
+      "unit": "s",
+      "minimum": 0.0
+    },
+    "status": {
+      "description": "The current status of the runtime",
+      "type": "string",
+      "enum": ["idle", "loading", "running", "working", "stopped", "failed"]
+    },
+    "statusSvg": {
+      "description": "An SVG string of the current status of the runtime",
+      "type": "string"
+    },
+    "statechartSvg": {
+      "description": "An SVG string of the state chart representing the current status of the runtime",
+      "type": "string"
+    },
+    "step": {
+      "description": "An string to track the current step being executed in the Mashup Logic",
+      "type": "string"
+    }
+  },
+  "actions": {
+    "start": { "description": "Starts a WoT System Runtime process" },
+    "restart": { "description": "Restarts a WoT System Runtime process" },
+    "stop": { "description": "Stops a WoT System Runtime process" }
+  },
+  "events": {
+    "start": {
+      "description": "WoT System Runtime changed status from 'idle' to 'loading'"
+    },
+    "done": {
+      "description": "WoT System Runtime changed status to 'running'"
+    },
+    "work": {
+      "description": "WoT System Runtime changed status from 'running' to 'working'"
+    },
+    "restart": {
+      "description": "WoT System Runtime changed status to 'loading'"
+    },
+    "stop": {
+      "description": "WoT System Runtime changed status from 'running' to 'stopped'"
+    },
+    "error": {
+      "description": "WoT System Runtime changed status from 'running' to 'failed'"
+    }
+  }
+}
